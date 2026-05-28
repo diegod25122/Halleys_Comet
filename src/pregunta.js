@@ -176,6 +176,6 @@ function reproducirAudioSecreto() {
 
     audio.onended = function() {
         mensaje.style.display = "none";
-        musicaFondo.volume = 1.0;
+        musicaFondo.volume = 2;
     };
 }

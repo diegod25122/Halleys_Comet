@@ -1,0 +1,377 @@
+/* --- ESTILOS GENERALES --- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6e6;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    line-height: 1.6; 
+    overflow-x: hidden; 
+}
+
+h1 { font-size: 2.2em; margin-bottom: 15px; }
+h2 { font-size: 1.8em; margin-bottom: 10px; }
+p { margin-bottom: 15px; }
+
+/* --- PANTALLA INICIAL --- */
+#inicio {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#inicio button {
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+#inicio button:hover {
+    background-color: #e60000;
+    transform: scale(1.05);
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+#contenido {
+    display: none;
+    padding: 60px 20px; 
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.heart-center {
+    font-size: 3.5em;
+    animation: latido 1.2s infinite;
+    margin: 20px 0;
+}
+
+@keyframes latido {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+.main-img {
+    width: 180px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid #ff4d4d;
+    margin: 30px auto; 
+    display: block;
+}
+
+/* --- TEXTO DE LA CARTA (typing) --- */
+#typing-container {
+    max-width: 800px;
+    margin: 40px auto; 
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.7); 
+    border-radius: 15px;
+    font-size: 1.3em;
+    text-align: justify; 
+}
+
+/* Cursor de máquina de escribir */
+#mensaje::after {
+    content: "|";
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Firma de la carta */
+.final-letter-signature {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 0 25px;
+}
+
+.final-letter-signature h2 { font-size: 1.8em; margin-bottom: 20px; }
+.final-letter-signature p { font-style: italic; font-size: 1.2em; margin-bottom: 10px; }
+
+/* --- CONTENEDORES DE SECCIONES (preguntas, medidor, etc.) --- */
+.section-container {
+    margin: 60px auto; 
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+    max-width: 800px;
+}
+
+.subtitle { color: #555; font-size: 1.1em; margin-bottom: 25px; }
+.final-instruction { color: #ff4d4d; margin: 60px 0 20px; }
+.buttons-stack { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+.hidden { display: none; }
+.text-center { text-align: center; }
+.margin-top-20 { margin-top: 20px; }
+
+/* --- SECCIÓN DE PREGUNTA --- */
+#seccion-pregunta { background-color: #fff; }
+
+#botones-amor { display: flex; justify-content: center; gap: 25px; margin: 30px 0; }
+
+.btn-confirm, .btn-cancel {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-confirm { background-color: #4caf50; }
+.btn-confirm:hover { background-color: #45a049; transform: scale(1.05); }
+
+.btn-cancel { background-color: #ff4d4d; transition: top 0.2s ease, left 0.2s ease; position: relative; }
+
+.final-yes-message { font-size: 1.6em; font-weight: bold; color: #ff4d4d; margin-bottom: 30px; }
+
+.reasons-block { margin-top: 40px; }
+
+.btn-reasons {
+    background-color: #ff66b2;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-reasons:hover { background-color: #ff4d94; transform: scale(1.05); }
+
+.reason-text { font-size: 1.3em; margin-top: 25px; font-style: italic; color: #555; min-height: 60px; padding: 0 20px; }
+
+/* --- MEDIDOR DE AMOR --- */
+#seccion-medidor { background-color: #fff0f0; border: 2px dashed #ff4d4d; }
+.seccion-medidor-hidden { display: none; } /* Sobreescribe display inline si lo hay */
+
+.meter-inputs { display: flex; align-items: center; justify-content: center; margin-bottom: 25px; }
+
+.meter-input {
+    padding: 12px;
+    font-size: 18px;
+    border: 2px solid #ff4d4d;
+    border-radius: 8px;
+    text-align: center;
+    width: 140px;
+    background-color: white;
+    color: #333;
+    font-weight: bold;
+    outline: none;
+}
+
+.meter-plus { font-size: 2.2em; margin: 0 15px; }
+
+.btn-meter {
+    background-color: #ff3333;
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-meter:hover { background-color: #cc0000; }
+.btn-meter:disabled { background-color: #999; cursor: not-allowed; }
+
+.meter-number { font-size: 4em; margin: 15px 0; color: #ff4d4d; transition: transform 0.1s; }
+.meter-error-message { color: red; font-weight: bold; font-size: 1.3em; }
+
+/* --- ZONA DE SORPRESAS --- */
+#zona-sorpresas { border-top: 2px solid #ffb3b3; background-color: #fff; }
+
+.btn-sorpresa {
+    background-color: #9933ff;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    width: 280px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-sorpresa:hover { background-color: #7a29cc; transform: scale(1.05); }
+
+
+#terminal-consola {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    margin: 20px auto 0;
+    text-align: left;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.terminal-hidden { display: none; }
+
+.terminal-img {
+    border: 2px solid #0f0;
+    width: 150px;
+    margin: 15px auto 0;
+    display: block;
+}
+
+
+#carta-legendaria {
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 350px;
+    margin: 20px auto 0;
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.4);
+    color: #333;
+    animation: aparecerCarta 0.5s ease-out;
+}
+
+.carta-hidden { display: none; }
+
+#carta-legendaria img {
+    border: 3px solid white;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 0 15px 0;
+}
+
+.rareza { font-weight: bold; color: #fff; text-shadow: 1px 1px 2px #000; margin: 10px 0; }
+
+.legendary-stats { text-align: left; list-style: none; padding: 0; }
+.legendary-stats li { margin-bottom: 8px; }
+
+@keyframes aparecerCarta {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Vista Favorita */
+#vista-favorita {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    animation: aparecerCarta 0.5s ease-out;
+}
+
+.vista-hidden { display: none; }
+
+#vista-favorita img { width: 100%; height: auto; border: none; }
+
+.texto-vista { font-size: 1.2em; font-style: italic; color: #555; margin-top: 15px; line-height: 1.4; }
+
+/* --- BOTIQUÍN EMOCIONAL --- */
+#botiquin-emocional { background-color: #f0f8ff; border: 2px solid #b3d9ff; }
+.botiquin-hidden { display: none; }
+
+.btn-refugio {
+    background-color: #66b3ff; /* Azul pastel relajante */
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    width: 280px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-refugio:hover { background-color: #3399ff; transform: scale(1.05); }
+
+.emergency-text { font-size: 1.3em; font-style: italic; color: #4d4d4d; min-height: 50px; padding: 0 20px; margin-top: 20px; }
+
+
+.circulo-respiracion {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #b3d9ff 0%, #66b3ff 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    box-shadow: 0 0 20px rgba(102, 179, 255, 0.5);
+    animation: respirar 8s infinite ease-in-out;
+}
+
+.breathing-hidden { display: none; margin-top: 20px; text-align: center; }
+.breathing-subtitle { color: #666; margin-bottom: 20px; }
+
+@keyframes respirar {
+    0%, 100% { transform: scale(0.8); }
+    50% { transform: scale(1.3); }
+}
+
+.audio-playing-message { display: none; color: #ff4d4d; font-size: 1.1em; margin-top: 20px; }
+
+
+@media (max-width: 600px) {
+    h1 { font-size: 1.8em; }
+    h2 { font-size: 1.5em; }
+    .heart-center { font-size: 2.5em; }
+    .main-img { width: 140px; height: 180px; }
+    #typing-container { font-size: 1.1em; padding: 15px; margin: 30px auto; }
+    .section-container { padding: 25px 15px; margin: 40px auto; }
+    #botones-amor { gap: 15px; flex-wrap: wrap; }
+    .btn-confirm, .btn-cancel { width: 100%; font-size: 16px; }
+    .meter-input { width: 100px; font-size: 16px; }
+    .meter-plus { font-size: 1.8em; }
+    .meter-number { font-size: 3em; }
+    .btn-sorpresa, .btn-refugio { width: 100%; }
+}
+/* --- CORAZONES FLOTANTES  --- */
+
+.floating {
+    position: fixed;
+    bottom: -50px;
+    pointer-events: none; 
+
+    animation: subirLoco 4s linear forwards; 
+}
+
+@keyframes subirLoco {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-60vh) translateX(30px) scale(1.2);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-120vh) translateX(-30px) scale(0.8);
+        opacity: 0;
+    }
+}

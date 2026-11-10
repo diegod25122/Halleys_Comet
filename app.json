@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Mi Cometa Halley",
+    "slug": "halleys-comet",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0d1230",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.diegocamacho.halleyscomet"
+    },
+    "android": {
+      "package": "com.diegocamacho.halleyscomet",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0d1230"
+      }
+    },
+    "plugins": [
+      "expo-status-bar",
+      "expo-audio",
+      "expo-asset",
+      "expo-video",
+      "expo-image",
+      "expo-font",
+      "expo-notifications"
+    ],
+    "icon": "./assets/icon.png"
+  }
+}

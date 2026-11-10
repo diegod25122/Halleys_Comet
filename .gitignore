@@ -1,0 +1,36 @@
+# dependencias
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# carpetas nativas generadas (EAS las crea en la nube)
+/ios
+/android
+
+# metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# varios
+.DS_Store
+*.pem
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# variables de entorno
+.env*.local
+
+# typescript
+*.tsbuildinfo

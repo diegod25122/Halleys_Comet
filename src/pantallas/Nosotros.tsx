@@ -4,7 +4,16 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import Miniatura from '../components/Miniatura';
 import Visor, { ElementoVisor } from '../components/Visor';
-import { CANCION, FECHA_INICIO, Hito, HITOS, NOMBRES, PLANES } from '../data/contenido';
+import {
+  CANCION,
+  COMPROMISO,
+  FECHA_COMPROMISO,
+  FECHA_INICIO,
+  Hito,
+  HITOS,
+  NOMBRES,
+  PLANES,
+} from '../data/contenido';
 import { colores, comunes, fuentes } from '../theme/estilos';
 import { CLAVES, guardar, leer } from '../utils/almacen';
 import { fechaLarga, tiempoJuntos } from '../utils/fechas';
@@ -19,6 +28,7 @@ function elementosDe(hito: Hito): ElementoVisor[] {
 
 function MediosHito({ hito, onAbrir }: { hito: Hito; onAbrir: (i: number) => void }) {
   const n = hito.medios.length;
+  if (n === 0) return null;
   if (n === 1) {
     return (
       <Miniatura
@@ -46,6 +56,7 @@ function MediosHito({ hito, onAbrir }: { hito: Hito; onAbrir: (i: number) => voi
 
 export default function Nosotros() {
   const { dias, semanas, meses } = tiempoJuntos(FECHA_INICIO);
+  const diasComprometidos = tiempoJuntos(FECHA_COMPROMISO).dias;
   const [cumplidos, setCumplidos] = useState<string[]>([]);
   const [abierto, setAbierto] = useState<{ hito: Hito; indice: number } | null>(null);
 
@@ -101,6 +112,23 @@ export default function Nosotros() {
               <Text style={styles.datoNumero}>{HITOS.length}</Text>
               <Text style={styles.datoTexto}>momentos</Text>
             </View>
+          </View>
+        </View>
+
+        {/* Compromiso */}
+        <View style={[comunes.tarjeta, styles.compromiso]}>
+          <Text style={styles.anillo}>💍</Text>
+          <Text style={comunes.kicker}>Comprometidos</Text>
+          <Text style={styles.tituloCompromiso}>{COMPROMISO.titulo}</Text>
+          <Text style={styles.fechaCompromiso}>{fechaLarga(FECHA_COMPROMISO)}</Text>
+          <Text style={[comunes.textoSuave, styles.centrado]}>{COMPROMISO.texto}</Text>
+          <View style={styles.pastilla}>
+            <Ionicons name="diamond-outline" size={14} color={colores.acento} />
+            <Text style={styles.textoPastilla}>
+              {diasComprometidos === 0
+                ? 'Hoy es nuestro primer día comprometidos'
+                : `${diasComprometidos} ${diasComprometidos === 1 ? 'día' : 'días'} comprometidos`}
+            </Text>
           </View>
         </View>
 
@@ -233,6 +261,45 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     textTransform: 'uppercase',
     color: colores.suave,
+  },
+  compromiso: {
+    alignItems: 'center',
+    gap: 6,
+    borderColor: colores.acento,
+    boxShadow: '0px 0px 18px rgba(255, 176, 122, 0.25)',
+  },
+  anillo: {
+    fontSize: 40,
+    lineHeight: 48,
+  },
+  tituloCompromiso: {
+    fontFamily: fuentes.tituloItalica,
+    fontSize: 26,
+    lineHeight: 32,
+    color: colores.texto,
+  },
+  fechaCompromiso: {
+    fontFamily: fuentes.fuerte,
+    fontSize: 15,
+    color: colores.acento,
+  },
+  centrado: {
+    textAlign: 'center',
+  },
+  pastilla: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 999,
+    backgroundColor: 'rgba(255, 176, 122, 0.12)',
+  },
+  textoPastilla: {
+    fontFamily: fuentes.medio,
+    fontSize: 12.5,
+    color: colores.acento,
   },
   cancion: {
     flexDirection: 'row',

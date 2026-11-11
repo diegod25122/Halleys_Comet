@@ -97,6 +97,12 @@ export function claveMes(fecha: Date = new Date()): string {
   return claveDia(fecha).slice(0, 7);
 }
 
+/** El lunes de la semana de `fecha` (a medianoche). */
+export function inicioSemana(fecha: Date = new Date()): Date {
+  const desdeLunes = (fecha.getDay() + 6) % 7;
+  return new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate() - desdeLunes);
+}
+
 export function desdeClaveDia(clave: string): Date {
   const [a, m, d] = clave.split('-').map(Number);
   return new Date(a, m - 1, d);

@@ -5,6 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import type { NombreIcono } from '../components/Boton';
 import MiniReproductor from '../components/MiniReproductor';
+import Novedades from '../components/Novedades';
 import {
   CARTAS_CUANDO,
   CUPONES,
@@ -13,6 +14,7 @@ import {
   IMAGENES,
   RAZONES,
   RECUERDOS,
+  VERSION_ACTUAL,
 } from '../data/contenido';
 import { colores, comunes, fuentes } from '../theme/estilos';
 import { CLAVES, leerJSON } from '../utils/almacen';
@@ -74,6 +76,7 @@ export default function Inicio({ onAbrirSeccion, onIrARecuerdos }: Props) {
 
   const [leidas, setLeidas] = useState<string[]>([]);
   const [canjes, setCanjes] = useState<Canjes>({});
+  const [verNovedades, setVerNovedades] = useState(false);
 
   useEffect(() => {
     leerJSON<string[]>(CLAVES.cartasLeidas, []).then((v) => Array.isArray(v) && setLeidas(v));
@@ -175,6 +178,21 @@ export default function Inicio({ onAbrirSeccion, onIrARecuerdos }: Props) {
       </View>
 
       <MiniReproductor />
+
+      <Pressable
+        onPress={() => setVerNovedades(true)}
+        accessibilityRole="button"
+        style={({ pressed }) => [styles.version, pressed && styles.presionado]}
+      >
+        <Ionicons name="sparkles-outline" size={13} color={colores.suave} />
+        <Text style={styles.textoVersion}>
+          Versión {VERSION_ACTUAL.version} · <Text style={styles.enlace}>Ver novedades</Text>
+        </Text>
+      </Pressable>
+
+      {verNovedades && (
+        <Novedades version={VERSION_ACTUAL} onCerrar={() => setVerNovedades(false)} />
+      )}
     </ScrollView>
   );
 }
@@ -297,5 +315,21 @@ const styles = StyleSheet.create({
   },
   presionado: {
     opacity: 0.8,
+  },
+  version: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 8,
+  },
+  textoVersion: {
+    fontFamily: fuentes.texto,
+    fontSize: 12,
+    color: colores.suave,
+  },
+  enlace: {
+    fontFamily: fuentes.medio,
+    color: colores.acento,
   },
 });

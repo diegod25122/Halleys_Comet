@@ -2,7 +2,7 @@
   "expo": {
     "name": "Mi Cometa Halley",
     "slug": "halleys-comet",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0d1230",
@@ -15,7 +15,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#0d1230"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     },
     "plugins": [
       "expo-status-bar",
@@ -26,6 +32,12 @@
       "expo-font",
       "expo-notifications"
     ],
-    "icon": "./assets/icon.png"
+    "icon": "./assets/icon.png",
+    "extra": {
+      "eas": {
+        "projectId": "45435276-58b7-487f-8c37-541bd8e70bb8"
+      }
+    },
+    "owner": "idiegouu"
   }
 }

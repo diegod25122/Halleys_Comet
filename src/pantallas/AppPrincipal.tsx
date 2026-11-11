@@ -5,14 +5,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import BarraPestanas, { Pestana } from '../components/BarraPestanas';
 import Botiquin from '../components/Botiquin';
 import CartaEscrita from '../components/CartaEscrita';
+import Compromiso from '../components/Compromiso';
 import Encabezado from '../components/Encabezado';
 import Mesiversario from '../components/Mesiversario';
+import Novedades from '../components/Novedades';
 import Sorpresas from '../components/Sorpresas';
-import { CARTA_MESIVERSARIO, FECHA_INICIO, TEXTOS_CARTA } from '../data/contenido';
+import {
+  CARTA_COMPROMISO,
+  CARTA_MESIVERSARIO,
+  FECHA_COMPROMISO,
+  FECHA_INICIO,
+  TEXTOS_CARTA,
+  VERSION_ACTUAL,
+} from '../data/contenido';
 import { comunes } from '../theme/estilos';
 import { CLAVES, guardar, leer } from '../utils/almacen';
 import { claveDia, proximoMesiversario } from '../utils/fechas';
-import { programarMesiversarios } from '../utils/notificaciones';
+import { programarAvisos } from '../utils/notificaciones';
+
+type Celebracion =
+  | { tipo: 'mesiversario' | 'compromiso'; meses: number }
+  | { tipo: 'novedades' };
 import Cartas from './Cartas';
 import Cupones from './Cupones';
 import Inicio, { Seccion } from './Inicio';
@@ -65,24 +78,55 @@ export default function AppPrincipal() {
   const [pestana, setPestana] = useState<Pestana>('inicio');
   const [seccion, setSeccion] = useState<Seccion | null>(null);
   const [cartaInicial, setCartaInicial] = useState<string | undefined>();
-  const [celebrar, setCelebrar] = useState<number | null>(null);
+  /** Ventanas pendientes (novedades y celebraciones de hoy); se muestran de una en una. */
+  const [celebraciones, setCelebraciones] = useState<Celebracion[]>([]);
+  const celebrar = celebraciones[0];
 
-  // Avisos de mesiversario + pantalla de celebración (una vez ese día)
+  // Avisos + pantallas de celebración (cada una, una sola vez ese día)
   useEffect(() => {
-    void programarMesiversarios(FECHA_INICIO);
+    void programarAvisos(FECHA_INICIO, FECHA_COMPROMISO);
 
-    const prox = proximoMesiversario(FECHA_INICIO);
-    if (!prox.esHoy) return;
-    leer(CLAVES.celebrado).then((ultimo) => {
-      if (ultimo !== claveDia()) setCelebrar(prox.meses);
+    let cancelado = false;
+    const hoy = claveDia();
+    const mesiversario = proximoMesiversario(FECHA_INICIO);
+    const compromiso = proximoMesiversario(FECHA_COMPROMISO);
+
+    Promise.all([
+      leer(CLAVES.versionVista),
+      mesiversario.esHoy ? leer(CLAVES.celebrado) : Promise.resolve(hoy),
+      compromiso.esHoy ? leer(CLAVES.compromisoCelebrado) : Promise.resolve(hoy),
+    ]).then(([versionVista, ultimoMesiversario, ultimoCompromiso]) => {
+      if (cancelado) return;
+      const pendientes: Celebracion[] = [];
+      // Primero lo nuevo de la actualización: así entiende las pantallas que vienen después
+      if (versionVista !== VERSION_ACTUAL.version) {
+        pendientes.push({ tipo: 'novedades' });
+      }
+      if (ultimoMesiversario !== hoy) {
+        pendientes.push({ tipo: 'mesiversario', meses: mesiversario.meses });
+      }
+      if (ultimoCompromiso !== hoy) {
+        pendientes.push({ tipo: 'compromiso', meses: compromiso.meses });
+      }
+      setCelebraciones(pendientes);
     });
+    return () => {
+      cancelado = true;
+    };
   }, []);
 
   const terminarCelebracion = (abrirCarta: boolean) => {
-    void guardar(CLAVES.celebrado, claveDia());
-    setCelebrar(null);
+    if (!celebrar) return;
+    if (celebrar.tipo === 'novedades') {
+      void guardar(CLAVES.versionVista, VERSION_ACTUAL.version);
+      setCelebraciones((cola) => cola.slice(1));
+      return;
+    }
+    const esCompromiso = celebrar.tipo === 'compromiso';
+    void guardar(esCompromiso ? CLAVES.compromisoCelebrado : CLAVES.celebrado, claveDia());
+    setCelebraciones((cola) => cola.slice(1));
     if (abrirCarta) {
-      setCartaInicial(CARTA_MESIVERSARIO);
+      setCartaInicial(esCompromiso ? CARTA_COMPROMISO : CARTA_MESIVERSARIO);
       setSeccion('cartas');
     }
   };
@@ -130,9 +174,23 @@ export default function AppPrincipal() {
         </>
       )}
 
-      {celebrar !== null && (
+      {celebrar?.tipo === 'novedades' && (
+        <Novedades
+          version={VERSION_ACTUAL}
+          recienActualizada
+          onCerrar={() => terminarCelebracion(false)}
+        />
+      )}
+      {celebrar?.tipo === 'mesiversario' && (
         <Mesiversario
-          meses={celebrar}
+          meses={celebrar.meses}
+          onAbrirCarta={() => terminarCelebracion(true)}
+          onCerrar={() => terminarCelebracion(false)}
+        />
+      )}
+      {celebrar?.tipo === 'compromiso' && (
+        <Compromiso
+          meses={celebrar.meses}
           onAbrirCarta={() => terminarCelebracion(true)}
           onCerrar={() => terminarCelebracion(false)}
         />

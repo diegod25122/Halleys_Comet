@@ -24,6 +24,8 @@ export const CLAVES = {
   cartasLeidas: 'halley:cartasLeidas',
   cupones: 'halley:cuponesCanjeados',
   celebrado: 'halley:mesiversarioCelebrado',
+  compromisoCelebrado: 'halley:compromisoCelebrado',
+  versionVista: 'halley:versionVista',
 } as const;
 
 /** Lee una lista o un objeto guardado como JSON. Si no hay nada o está dañado, devuelve `vacio`. */

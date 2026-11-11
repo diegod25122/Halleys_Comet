@@ -64,9 +64,9 @@ export const SONIDOS = {
   vozMotivacion: require('../../assets/sounds/audio_motivacion.mp3'),
 };
 
-// ---------------------------------------------------------------------------
+
 // Fotos y videos
-// ---------------------------------------------------------------------------
+
 
 export type Medio = {
   id: string;
@@ -77,7 +77,6 @@ export type Medio = {
 const foto = (id: string, fuente: number): Medio => ({ id, tipo: 'foto', fuente });
 const video = (id: string, fuente: number): Medio => ({ id, tipo: 'video', fuente });
 
-/** Todo lo que aparece en la pestaña Recuerdos (en este orden). */
 export const RECUERDOS: readonly Medio[] = [
   foto('besito', require('../../assets/images/besito.jpeg')),
   foto('flores', require('../../assets/images/flores.jpeg')),
@@ -101,8 +100,15 @@ export const RECUERDOS: readonly Medio[] = [
 // Nosotros
 // ---------------------------------------------------------------------------
 
-/** Día en que empezamos: 2 de junio de 2026 (los meses en JS empiezan en 0). */
+
 export const FECHA_INICIO = new Date(2026, 5, 2);
+
+export const FECHA_COMPROMISO = new Date(2026, 10, 10);
+
+export const COMPROMISO = {
+  titulo: 'Dijiste que sí :,3',
+  texto: 'Un Martes 10 de noviembre de 2026, ambos dijimos que si a nuestra promesa futura, de verdad me haz hecho muy feliz y espero en un futuro poder cumplirla juntos y verte vestida de blanco Te amo <3💍',
+} as const;
 
 export const CANCION = {
   titulo: "Halley's Comet",
@@ -152,6 +158,12 @@ export const HITOS: readonly Hito[] = [
       foto('spiderman2', require('../../assets/images/spiderman2.jpeg')),
       foto('spiderman3', require('../../assets/images/spiderman3.jpeg')),
     ],
+  },
+  {
+    fecha: '10 de noviembre de 2026',
+    titulo: 'El anillo 💍',
+    texto: 'Te di el anillo de compromiso y empezamos a escribir el "para siempre".',
+    medios: [],
   },
 ];
 
@@ -237,10 +249,20 @@ export const CARTAS_CUANDO: readonly CartaCuando[] = [
     texto:
       'Mi vida, para mí tú eres la mejor chica del mundo y mil veces te elegiría. Sé que a veces puede que no sea el mejor enamorado, pero créeme que lo intento; de mi parte estoy dispuesto a hacer todo por ti. Te amo tanto tanto y espero de corazón seguir contigo por laaaaaaaaaaaaaaaaaaaaaaaaaaargo tiempo, tal y como dijo tu ma: que si seguimos en 2 años nos va a dejar viajar akjskas. Sé que fue de chiste y podría ser antes askja, pero lo amé. Bueno amor, te amo, ¿sabes? Eres y serás siempre el motivo por el cual me dediqué bastante a salvarme, y de verdad estoy agradecido. Te amo con mi vida, mi niña de lindos ojos.',
   },
+  {
+    id: 'compromiso',
+    cuando: 'quieras recordar el día del anillo',
+    titulo: 'Para siempre',
+    texto:
+      'Mi amor, el 10 de noviembre de 2026 te entregue un anillo y con él te entregue mis sentimientos y mi vida. No fue un impulso: es lo que siento desde que vi tus ojos por primera vez. Quiero despertar contigo, cuidarte cuando estés enferma, celebrar cada logro tuyo y estar a tu lado en los días difíciles. Como hemos hablado quiero estar contigo 4ever mi vida teamo, vivir la vida contigo hasta viejitos y decirte al oido "viste que si eras tú el amor de mi vida". Gracias por decirme que sí. Eres el amor de mi vida. Te ame ayer, te amo hoy y te amare siempre mi niña de lindos ojos <3 💍',
+  },
 ];
 
 /** La carta que se abre el día del mesiversario. */
 export const CARTA_MESIVERSARIO = 'aniversario';
+
+/** La carta que se abre el día del "mesiversario" del compromiso (el 10 de cada mes). */
+export const CARTA_COMPROMISO = 'compromiso';
 
 // ---------------------------------------------------------------------------
 // Mensaje del día (sale uno distinto cada día; al terminar la lista, vuelve a empezar)
@@ -284,8 +306,8 @@ export const FRASES_DIA: readonly string[] = [
 // Cupones de amor
 // ---------------------------------------------------------------------------
 
-/** cuandoQuieras: sin límite · mensual: 1 vez al mes · unico: solo una vez */
-export type LimiteCupon = 'cuandoQuieras' | 'mensual' | 'unico';
+/** cuandoQuieras: sin límite · semanal: 1 vez a la semana · mensual: 1 vez al mes · unico: solo una vez */
+export type LimiteCupon = 'cuandoQuieras' | 'semanal' | 'mensual' | 'unico';
 
 export type Cupon = {
   id: string;
@@ -298,10 +320,10 @@ export type Cupon = {
 
 export const CUPONES: readonly Cupon[] = [
   { id: 'abrazo', titulo: 'Un abrazo de 10 minutos', nota: 'Sin soltarte antes', limite: 'cuandoQuieras', icono: 'heart-outline' },
-  { id: 'fresas', titulo: 'Yo invito las fresas con crema', nota: 'Tú solo apareces', limite: 'mensual', icono: 'ice-cream-outline' },
+  { id: 'fresas', titulo: 'Yo invito las fresas con crema', nota: 'Tú solo apareces', limite: 'cuandoQuieras', icono: 'ice-cream-outline' },
   { id: 'papipollo', titulo: 'Un papipollo por mi cuenta', nota: 'Tú solo pides', limite: 'mensual', icono: 'fast-food-outline' },
   { id: 'peli', titulo: 'Tú eliges la peli', nota: 'Y no me quejo', limite: 'mensual', icono: 'film-outline' },
-  { id: 'discusion', titulo: 'Ganas una discusión', nota: 'Aunque no tengas la razón jeje', limite: 'unico', icono: 'trophy-outline' },
+  { id: 'discusion', titulo: 'Ganas una discusión', nota: 'Aunque no tengas la razón jeje', limite: 'semanal', icono: 'trophy-outline' },
   { id: 'llamada', titulo: 'Llamada hasta que te duermas', nota: 'Cualquier noche', limite: 'cuandoQuieras', icono: 'call-outline' },
   { id: 'consentirte', titulo: 'Un día de consentirte', nota: 'Lo que tú quieras', limite: 'unico', icono: 'sparkles-outline' },
   { id: 'cancion', titulo: 'Te canto una canción', nota: 'Aunque cante feo', limite: 'cuandoQuieras', icono: 'musical-notes-outline' },
@@ -311,6 +333,53 @@ export const CUPONES: readonly Cupon[] = [
   { id: 'paseo', titulo: 'Un paseo juntos', nota: 'Tú eliges a dónde', limite: 'cuandoQuieras', icono: 'walk-outline' },
   { id: 'cuidarte', titulo: 'Te cuido cuando estés enferma', nota: 'Con sopita y todo', limite: 'cuandoQuieras', icono: 'medkit-outline' },
   { id: 'cafecito', titulo: 'Un cafecito o heladito juntos', nota: 'Y conversamos de todo', limite: 'cuandoQuieras', icono: 'cafe-outline' },
-  { id: 'buzo', titulo: 'Te regalo mi buzo', nota: 'Y ya no te lo pido de vuelta jeje', limite: 'unico', icono: 'shirt-outline' },
+  { id: 'buzo', titulo: 'Te regalo mi buzo', nota: 'Las veces que quieras jeje', limite: 'cuandoQuieras', icono: 'shirt-outline' },
   { id: 'jugar', titulo: 'Te dejo ganar en un juego', nota: 'Pero solo una vez eh', limite: 'unico', icono: 'game-controller-outline' },
 ];
+
+// ---------------------------------------------------------------------------
+// Novedades (lo que sale cuando la app se actualiza)
+// ---------------------------------------------------------------------------
+
+export type Novedad = {
+  /** Nombre de un ícono de Ionicons */
+  icono: string;
+  texto: string;
+};
+
+export type Version = {
+  /** Igual que "version" en app.json */
+  version: string;
+  fecha: string;
+  titulo: string;
+  novedades: readonly Novedad[];
+};
+
+/**
+ * Historial de versiones, de la más nueva a la más vieja.
+ * Para una actualización nueva: agrega una versión ARRIBA de todo y sube "version" en app.json
+ * al mismo número. Ella verá la ventana de novedades una sola vez.
+ */
+export const VERSIONES: readonly Version[] = [
+  {
+    version: '1.1.0',
+    fecha: '11 de noviembre de 2026',
+    titulo: 'Edición compromiso 💍',
+    novedades: [
+      { icono: 'diamond-outline', texto: 'Una tarjeta especial en Nosotros con el día que te di el anillo y los días que llevamos comprometidos.' },
+      { icono: 'calendar-outline', texto: 'Cada 10 del mes hay una pantalla sorpresa para celebrar nuestros meses de compromiso.' },
+      { icono: 'notifications-outline', texto: 'Ahora te aviso un día antes y el mismo día de cada mes de compromiso.' },
+      { icono: 'mail-unread-outline', texto: 'Una carta nueva: "Ábrela cuando quieras recordar el día del anillo".' },
+      { icono: 'git-commit-outline', texto: 'El anillo ya es parte de nuestra línea del tiempo.' },
+      { icono: 'trophy-outline', texto: 'Cupones mejorados: ganas una discusión cada semana, y mi buzo y las fresas con crema son cuando quieras.' },
+    ],
+  },
+  {
+    version: '1.0.0',
+    fecha: 'Junio de 2026',
+    titulo: 'Mi cometa Halley ☄️',
+    novedades: [{ icono: 'heart-outline', texto: 'La primera versión de tu app, hecha con todo mi amor.' }],
+  },
+];
+
+export const VERSION_ACTUAL = VERSIONES[0];

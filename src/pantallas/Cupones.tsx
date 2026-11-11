@@ -7,7 +7,7 @@ import Boton from '../components/Boton';
 import { Cupon, CUPONES, LimiteCupon, NOMBRES } from '../data/contenido';
 import { colores, comunes, fuentes } from '../theme/estilos';
 import { CLAVES, guardarJSON, leerJSON } from '../utils/almacen';
-import { claveDia, claveMes, desdeClaveDia, fechaCorta } from '../utils/fechas';
+import { claveDia, claveMes, desdeClaveDia, fechaCorta, inicioSemana } from '../utils/fechas';
 
 type NombreIcono = ComponentProps<typeof Ionicons>['name'];
 
@@ -16,12 +16,14 @@ export type Canjes = Record<string, string[]>;
 
 const ETIQUETA: Record<LimiteCupon, string> = {
   cuandoQuieras: 'Cuando quieras',
+  semanal: '1 vez a la semana',
   mensual: '1 vez al mes',
   unico: 'Solo una vez',
 };
 
 const AVISO: Record<LimiteCupon, string> = {
   cuandoQuieras: 'Puedes usarlo todas las veces que quieras.',
+  semanal: 'Después podrás usarlo otra vez la próxima semana (se renueva cada lunes).',
   mensual: 'Después podrás usarlo otra vez el próximo mes.',
   unico: 'Solo se puede usar una vez, así que úsalo bien jeje.',
 };
@@ -30,6 +32,10 @@ export function cuponDisponible(cupon: Cupon, canjes: Canjes): boolean {
   const usados = canjes[cupon.id] ?? [];
   if (cupon.limite === 'unico') return usados.length === 0;
   if (cupon.limite === 'mensual') return !usados.some((d) => d.startsWith(claveMes()));
+  if (cupon.limite === 'semanal') {
+    const lunes = claveDia(inicioSemana());
+    return !usados.some((d) => d >= lunes);
+  }
   return true;
 }
 
@@ -42,6 +48,11 @@ function detalleCanje(cupon: Cupon, canjes: Canjes): string | null {
   if (cupon.limite === 'mensual' && !cuponDisponible(cupon, canjes)) {
     const hoy = new Date();
     const proximo = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 1);
+    return `Canjeado el ${fecha} · vuelve el ${fechaCorta(proximo)}`;
+  }
+  if (cupon.limite === 'semanal' && !cuponDisponible(cupon, canjes)) {
+    const lunes = inicioSemana();
+    const proximo = new Date(lunes.getFullYear(), lunes.getMonth(), lunes.getDate() + 7);
     return `Canjeado el ${fecha} · vuelve el ${fechaCorta(proximo)}`;
   }
   return usados.length === 1 ? `Canjeado 1 vez` : `Canjeado ${usados.length} veces`;
